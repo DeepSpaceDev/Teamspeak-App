@@ -17,17 +17,26 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.sql.Wrapper;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Launcher extends AppCompatActivity implements OnTaskCompletedInterface{
 
-    TextView users;
-    String JSONusers;
+    TextView vonlineusers, vofflineusers;
     final String LOGTAG = "DeepSpace";
 
 
@@ -36,7 +45,8 @@ public class Launcher extends AppCompatActivity implements OnTaskCompletedInterf
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
-        users = (TextView) findViewById(R.id.users);
+        vonlineusers = (TextView) findViewById(R.id.onlineusers_view);
+        vofflineusers = (TextView) findViewById(R.id.offlineusers_view);
 
         Toast.makeText(Launcher.this, "Loading", Toast.LENGTH_LONG).show();
 
@@ -45,7 +55,66 @@ public class Launcher extends AppCompatActivity implements OnTaskCompletedInterf
 
     @Override
     public void onTaskCompleted(String response) {
-        users.setText(response);
+        try{
+            JSONArray arr = new JSONArray(response);
+
+            ArrayList<String> usernames = new ArrayList<>();
+            ArrayList<Boolean> onlinestat = new ArrayList<>();
+
+            ArrayList<String> onlineusers = new ArrayList<>();
+            ArrayList<String> offlineusers = new ArrayList<>();
+
+            for(int i = 0; i < arr.length(); i++){
+                JSONObject obj = new JSONObject(arr.get(i).toString());
+                usernames.add(obj.getString("name"));
+                onlinestat.add(obj.getBoolean("online"));
+            }
+
+            for(int i = 0; i < usernames.size(); i++){
+                if(onlinestat.get(i)){
+                    onlineusers.add(usernames.get(i));
+                }
+                else{
+                    offlineusers.add(usernames.get(i));
+                }
+            }
+
+            sort(onlineusers);
+            sort(offlineusers);
+
+            String onlu = "";
+            String offu = "";
+
+            for(int i = 0; i < onlineusers.size(); i++){
+                onlu += onlineusers.get(i);
+                if(i != onlineusers.size() - 1){
+                    onlu += ", ";
+                }
+            }
+            for(int i = 0; i < offlineusers.size(); i++){
+                offu += offlineusers.get(i);
+                if(i != offlineusers.size() - 1){
+                    offu += ", ";
+                }
+            }
+
+            vonlineusers.setText(onlu);
+            vofflineusers.setText(offu);
+
+        }
+        catch(JSONException e){
+            Log.e(LOGTAG, e.getMessage());
+        }
+        //users.setText(response);
+    }
+
+    public void sort(ArrayList e){
+        Collections.sort(e, new Comparator<String>() {
+            @Override
+            public int compare(String lhs, String rhs) {
+                return lhs.toLowerCase().compareTo(rhs.toLowerCase());
+            }
+        });
     }
 
     public class GetUserData extends AsyncTask<Object, Void, String>{
@@ -84,7 +153,6 @@ public class Launcher extends AppCompatActivity implements OnTaskCompletedInterf
                 inStream.close();
 
                 result = buffer.toString();
-                Log.d(LOGTAG, result);
             } catch (Exception e) {
                 Log.e(LOGTAG, e.toString());
                 e.printStackTrace();

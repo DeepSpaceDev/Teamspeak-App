@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".Launcher">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    tools:context=".Launcher">
 
-    <ScrollView
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/users"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        android:columnCount="1">
 
-</LinearLayout>
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/onlineusers_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            card_view:cardElevation="3dp">
+            <include layout="@layout/onlineusers"/>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/offlineusers_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:layout_marginBottom="20dp"
+            card_view:cardElevation="3dp">
+            <include layout="@layout/offlineusers"/>
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+</ScrollView>

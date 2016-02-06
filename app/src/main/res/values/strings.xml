@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">DeepSpace Teamspeak</string>
+    <string name="app_name">Teamspeak</string>
+    <string name="app_title">DeepSpace Teamspeak</string>
 </resources>

@@ -3,16 +3,23 @@
     android:id="@+id/offlineusers"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
     android:layout_margin="16dp"
     android:orientation="vertical">
+    <!--android:layout_gravity="center_horizontal"-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/head_textSize"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/redPrimary"
+        android:text="Offline"/>
 
     <TextView
         android:textSize="@dimen/user_textSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/offlineusers_view"
-        android:gravity="center"
         android:text="Loading, please wait..." />
 
 </LinearLayout>

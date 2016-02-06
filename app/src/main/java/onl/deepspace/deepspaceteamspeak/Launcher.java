@@ -48,7 +48,7 @@ public class Launcher extends AppCompatActivity implements OnTaskCompletedInterf
         vonlineusers = (TextView) findViewById(R.id.onlineusers_view);
         vofflineusers = (TextView) findViewById(R.id.offlineusers_view);
 
-        Toast.makeText(Launcher.this, "Loading", Toast.LENGTH_LONG).show();
+        //Toast.makeText(Launcher.this, "Loading", Toast.LENGTH_LONG).show();
 
         new GetUserData(Launcher.this).execute(new Object());
     }

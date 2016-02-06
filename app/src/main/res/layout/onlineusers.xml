@@ -3,16 +3,22 @@
     android:id="@+id/onlineusers"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
     android:layout_margin="16dp"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/head_textSize"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/greenPrimary"
+        android:text="Online"/>
 
     <TextView
         android:textSize="@dimen/user_textSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/onlineusers_view"
-        android:gravity="center"
         android:text="Loading, please wait..." />
 
 </LinearLayout>
